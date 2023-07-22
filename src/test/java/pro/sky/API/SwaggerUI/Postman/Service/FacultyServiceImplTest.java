@@ -29,14 +29,13 @@ class FacultyServiceImplTest {
 
     @Test
     void addFacultyTest() {
-        Faculty faculty = facultyRepository.save(new Faculty(1, "Name", "Color"));
-        System.out.println("faculty = " + faculty);
-  //      Mockito.when(facultyRepository.save(new Faculty(1, "Name", "Color"))).thenReturn(new Faculty(1, "Name", "Color"));
- //       Faculty expected = new Faculty(1, "Name", "Color");
+       
+        Mockito.when(facultyRepository.save(new Faculty(1, "Name", "Color"))).thenReturn(new Faculty(1, "Name", "Color"));
+        Faculty expected = new Faculty(1, "Name", "Color");
 
-//        Faculty actual = facultyServiceImpl.addFaculty(new Faculty(1, "Name", "Color"));
+        Faculty actual = facultyServiceImpl.addFaculty(new Faculty(1, "Name", "Color"));
 
- //       assertEquals(expected, actual);
+       assertEquals(expected, actual);
 
     }
 
