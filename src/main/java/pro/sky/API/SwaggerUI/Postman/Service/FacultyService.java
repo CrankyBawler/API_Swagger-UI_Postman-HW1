@@ -1,6 +1,7 @@
 package pro.sky.API.SwaggerUI.Postman.Service;
 
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
+import pro.sky.API.SwaggerUI.Postman.Model.Student;
 
 import java.util.Collection;
 
@@ -15,4 +16,7 @@ public interface FacultyService {
     void deleteFaculty(long id);
 
     Collection<Faculty> findByNameOrColor(String name, String color);
+
+    Faculty findFacultyByStudent(Student student);
+
 }

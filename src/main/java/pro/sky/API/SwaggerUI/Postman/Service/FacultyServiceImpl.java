@@ -2,6 +2,7 @@ package pro.sky.API.SwaggerUI.Postman.Service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
+import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.FacultyRepository;
 
 import java.util.Collection;
@@ -35,4 +36,9 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Faculty> findByNameOrColor(String name, String color) {
         return facultyRepository.findAllByNameOrColorIgnoreCase(name, color);
     }
+    public Faculty findFacultyByStudent(Student student) {
+        return facultyRepository.findFacultyByStudent(student);
+    }
+
+
 }
