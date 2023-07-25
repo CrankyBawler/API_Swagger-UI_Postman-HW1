@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Service.FacultyService;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
@@ -42,5 +44,10 @@ public class FacultyController {
     public ResponseEntity<Void> deleteFaculty(@PathVariable long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findFacultyByNameOrColor(@RequestParam(required = false) String name,
+                                                                        @RequestParam(required = false) String color) {
+        return ResponseEntity.ok(facultyService.findByNameOrColor(name, color));
     }
 }

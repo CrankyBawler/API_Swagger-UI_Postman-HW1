@@ -12,7 +12,7 @@ public class Student {
     @GeneratedValue
     private long id;
     private String name;
-    private String age;
+    private int age;
 
     public Student () {
 
@@ -27,12 +27,13 @@ public class Student {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && name.equals(student.name) && age.equals(student.age);
+        return id == student.id && age == student.age && name.equals(student.name);
     }
 
     @Override
@@ -56,15 +57,15 @@ public class Student {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public Student(long id, String name, String age) {
+    public Student(long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;

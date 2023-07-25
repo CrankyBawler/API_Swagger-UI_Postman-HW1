@@ -27,7 +27,7 @@ class StudentServiceImplTest {
 
     @Test
     void addStudent() {
-        Student student = new Student(1, "Name", "Age");
+        Student student = new Student(1, "Name", 10);
         Mockito.when(studentRepository.save(Mockito.any(Student.class))).thenReturn(student);
         Student expexted = student;
         Student actual = studentServiceimpl.addStudent(student);
@@ -39,7 +39,7 @@ class StudentServiceImplTest {
 
     @Test
     void findStudent() {
-        Student student = new Student(1, "Name", "Age");
+        Student student = new Student(1, "Name", 10);
         Mockito.when(studentRepository.getById(Mockito.any())).thenReturn(student);
         Student expected = student;
         Student actual = studentServiceimpl.findStudent(1);
@@ -51,7 +51,7 @@ class StudentServiceImplTest {
 
     @Test
     void editStudent() {
-        Student student = new Student(1, "Name", "Age");
+        Student student = new Student(1, "Name", 10);
         Mockito.when(studentRepository.save(Mockito.any(Student.class))).thenReturn(student);
         Student expexted = student;
         Student actual = studentServiceimpl.editStudent(student);
@@ -63,7 +63,7 @@ class StudentServiceImplTest {
 
     @Test
     void deleteStudent() {
-        Student student = new Student(1, "Name", "Age");
+        Student student = new Student(1, "Name", 10);
         Mockito.when(studentRepository.save(Mockito.any(Student.class))).thenReturn(student);
         Student student1 = studentServiceimpl.addStudent(student);
         studentServiceimpl.deleteStudent(1);

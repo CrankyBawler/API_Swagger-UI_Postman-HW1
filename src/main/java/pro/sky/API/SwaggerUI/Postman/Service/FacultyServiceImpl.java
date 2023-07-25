@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Repository.FacultyRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 @Service
@@ -31,4 +32,7 @@ public class FacultyServiceImpl implements FacultyService {
         facultyRepository.deleteById(id);
     }
 
+    public Collection<Faculty> findByNameOrColor(String name, String color) {
+        return facultyRepository.findAllByNameOrColorIgnoreCase(name, color);
+    }
 }

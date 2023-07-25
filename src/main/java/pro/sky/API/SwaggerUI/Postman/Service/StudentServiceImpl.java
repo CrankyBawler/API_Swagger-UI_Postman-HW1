@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.StudentRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -30,5 +31,9 @@ public class StudentServiceImpl implements StudentService {
 
         studentRepository.deleteById(id);
     }
+
+   public Collection<Student> findByAgeBetween(int ageMin, int ageMax) {
+       return studentRepository.findByAgeBetween(ageMin,ageMax);
+   }
 
 }
