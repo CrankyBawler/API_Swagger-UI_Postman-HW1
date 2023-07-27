@@ -53,12 +53,9 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findByNameOrColor(name, color));
     }
 
-    @GetMapping("/facultyByStudent")
-    public ResponseEntity<Faculty> findFacultyByStudent(@RequestBody Student student) {
-        if (student != null) {
-            return ResponseEntity.ok(facultyService.findFacultyByStudent(student));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+   @GetMapping("/{facultyId}/students")
+   public Collection <Student> getStudentsbyFaculty(@PathVariable long facultyId) {
+       return facultyService.get(facultyId).getStudents();
+   }
 
 }
