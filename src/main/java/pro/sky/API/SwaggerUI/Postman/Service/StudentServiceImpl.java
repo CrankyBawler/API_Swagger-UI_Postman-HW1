@@ -1,6 +1,7 @@
 package pro.sky.API.SwaggerUI.Postman.Service;
 
 import org.springframework.stereotype.Service;
+import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.StudentRepository;
 
@@ -38,6 +39,10 @@ public class StudentServiceImpl implements StudentService {
 
     public Collection<Student> findStudentByFaculty(long facultyId) {
         return studentRepository.findAllByFaculty_Id(facultyId);
+    }
+
+    public Student get(long studentId) {
+        return studentRepository.getById(studentId);
     }
 
 }
