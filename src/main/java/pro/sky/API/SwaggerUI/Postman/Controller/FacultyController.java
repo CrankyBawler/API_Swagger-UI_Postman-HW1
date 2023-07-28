@@ -8,6 +8,7 @@ import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Service.FacultyService;
 
 import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/faculty")
@@ -54,7 +55,7 @@ public class FacultyController {
     }
 
    @GetMapping("/{facultyId}/students")
-   public Collection <Student> getStudentsByFaculty(@PathVariable long facultyId) {
+   public Collection<Student> getStudentsByFaculty(@PathVariable long facultyId) {
        return facultyService.get(facultyId).getStudents();
    }
 

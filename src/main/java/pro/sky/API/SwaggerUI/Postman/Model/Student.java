@@ -27,6 +27,7 @@ public class Student {
     @JsonIgnore
     private Faculty faculty;
 
+
     public Student () {
 
     }
