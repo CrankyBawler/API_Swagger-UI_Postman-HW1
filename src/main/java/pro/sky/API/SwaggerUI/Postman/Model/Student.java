@@ -46,14 +46,13 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && age == student.age && name.equals(student.name) && faculty.equals(student.faculty);
+        return id == student.id && age == student.age && name.equals(student.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, faculty);
+        return Objects.hash(id, name, age);
     }
-
     public long getId() {
         return id;
     }
