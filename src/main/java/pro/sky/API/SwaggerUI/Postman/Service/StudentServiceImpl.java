@@ -1,9 +1,11 @@
 package pro.sky.API.SwaggerUI.Postman.Service;
 
 import org.springframework.stereotype.Service;
+import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.StudentRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -19,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student findStudent(long id) {
-        return studentRepository.getById(id);
+        return studentRepository.findById(id).orElse(null);
     }
 
     public Student editStudent(Student student) {
@@ -29,6 +31,15 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(long id) {
 
         studentRepository.deleteById(id);
+    }
+
+   public Collection<Student> findByAgeBetween(int ageMin, int ageMax) {
+       return studentRepository.findByAgeBetween(ageMin,ageMax);
+   }
+
+
+    public Student get(long studentId) {
+        return studentRepository.getById(studentId);
     }
 
 }

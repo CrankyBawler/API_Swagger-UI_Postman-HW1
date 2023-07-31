@@ -1,8 +1,8 @@
 package pro.sky.API.SwaggerUI.Postman.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +12,21 @@ public class Student {
     @GeneratedValue
     private long id;
     private String name;
-    private String age;
+    private int age;
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    @ManyToOne
+    @JoinColumn (name = "faculty_id")
+    @JsonIgnore
+    private Faculty faculty;
+
 
     public Student () {
 
@@ -32,14 +46,13 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && name.equals(student.name) && age.equals(student.age);
+        return id == student.id && age == student.age && name.equals(student.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, age);
     }
-
     public long getId() {
         return id;
     }
@@ -56,15 +69,15 @@ public class Student {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public Student(long id, String name, String age) {
+    public Student(long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;

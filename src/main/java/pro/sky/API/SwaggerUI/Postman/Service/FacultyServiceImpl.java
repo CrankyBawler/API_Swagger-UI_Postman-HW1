@@ -2,8 +2,10 @@ package pro.sky.API.SwaggerUI.Postman.Service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
+import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.FacultyRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 @Service
@@ -20,7 +22,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Faculty findFaculty(long id) {
-        return facultyRepository.getById(id);
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty editFaculty(Faculty faculty) {
@@ -30,5 +32,17 @@ public class FacultyServiceImpl implements FacultyService {
     public void deleteFaculty(long id) {
         facultyRepository.deleteById(id);
     }
+
+    public Collection<Faculty> findByNameOrColor(String name, String color) {
+        return facultyRepository.findAllByNameOrColorIgnoreCase(name, color);
+    }
+
+    public Faculty get(long facultyId) {
+        return facultyRepository.getById(facultyId);
+    }
+
+
+
+
 
 }

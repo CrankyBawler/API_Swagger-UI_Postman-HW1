@@ -4,7 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
+import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Service.FacultyService;
+
+import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/faculty")
@@ -43,4 +47,16 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findFacultyByNameOrColor(@RequestParam(required = false) String name,
+                                                                        @RequestParam(required = false) String color) {
+        return ResponseEntity.ok(facultyService.findByNameOrColor(name, color));
+    }
+
+   @GetMapping("/{facultyId}/students")
+   public Collection<Student> getStudentsByFaculty(@PathVariable long facultyId) {
+       return facultyService.get(facultyId).getStudents();
+   }
+
 }

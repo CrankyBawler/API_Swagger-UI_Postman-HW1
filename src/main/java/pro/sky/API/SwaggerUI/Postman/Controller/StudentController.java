@@ -1,10 +1,14 @@
 package pro.sky.API.SwaggerUI.Postman.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Service.StudentService;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/student")
@@ -27,7 +31,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent (@RequestBody Student student) {
+    public Student createStudent(@RequestBody Student student) {
         return studentService.addStudent(student);
     }
 
@@ -44,6 +48,16 @@ public class StudentController {
     public ResponseEntity<Void> deleteStudent(@PathVariable long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
-
     }
+
+    @GetMapping("/byAgeBetween")
+    public Collection<Student> byAgeBetween(@RequestParam int ageMin, @RequestParam int ageMax) {
+        return studentService.findByAgeBetween(ageMin, ageMax);
+    }
+    @GetMapping("faculty/{studentId}")
+        public ResponseEntity<Faculty> getFaculty(@PathVariable Long studentId) {
+        Faculty faculty = studentService.get(studentId).getFaculty();
+        return ResponseEntity.ok(faculty);
+    }
+
 }
