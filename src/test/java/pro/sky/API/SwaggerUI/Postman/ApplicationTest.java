@@ -95,29 +95,28 @@ class ApplicationTests {
                "http://localhost:" + port + "/faculty/1", String.class));
    }
 
-//   @Test
-//   public void editStudentTest() {
-//    Student student = new Student(findLastStudentId(), "Имя2", 20);
-//       this.testRestTemplate.put("http://localhost:" + port + "/student", student);
-//       Optional<Student> optionalStudent = studentRepository.findById(findLastStudentId());
-//
-//       assertTrue(optionalStudent.isPresent());
-//
-//
-//       Student actualStudent = optionalStudent.get();
-//       assertEquals(student, actualStudent);
-//   }
+   @Test
+   public void editStudentTest() {
+    Student student = new  Student(findLastStudentId(), "Имя2", 20);
+       this.testRestTemplate.put("http://localhost:" + port + "/student", student);
+       Optional<Student> optionalStudent = studentRepository.findById(findLastStudentId());
 
-//   @Test
-//   public void editFacultyTest() {
-//         Faculty faculty = new Faculty(findLastFacultyId(), "Факультет2", "Белый");
-//       ResponseEntity<Faculty> response = facultyController.editFaculty(faculty);
-//       int actualStatusCodeValue = response.getStatusCodeValue();
-//       int expectedCode = 200;
-//       Assertions.assertEquals(expectedCode, actualStatusCodeValue, "коды не совпадают");
-//   }
+       assertTrue(optionalStudent.isPresent());
+
+
+       Student actualStudent = optionalStudent.get();
+       assertEquals(student, actualStudent);
+   }
 
    @Test
+   public void editFacultyTest() {
+         Faculty faculty = new Faculty(findLastFacultyId(), "Факультет2", "Белый");
+       ResponseEntity<Faculty> response = facultyController.editFaculty(faculty);
+       int actualStatusCodeValue = response.getStatusCodeValue();
+       int expectedCode = 200;
+       Assertions.assertEquals(expectedCode, actualStatusCodeValue, "коды не совпадают");
+   }
+  @Test
    void deleteStudentTest() {
        Student lastStudent = studentRepository.findById(findLastStudentId()).orElse(null);
        Long lastStudentId = (lastStudent == null) ? null : lastStudent.getId();
@@ -126,164 +125,87 @@ class ApplicationTests {
        assertNotEquals(findLastStudentId(), lastStudentId);
    }
 
-//   /**
-//    * тестируем удаление факультета
-//    */
-//   @Test
-//   void deleteFacultyTest() {
-//       Faculty lastFaculty = facultyRepository.findById(findLastFacultyId()).orElse(null);
-//       Long lastFacultyId = (lastFaculty == null) ? null : lastFaculty.getId();
+   @Test
+   void deleteFacultyTest() {
+       Faculty lastFaculty = facultyRepository.findById(findLastFacultyId()).orElse(null);
+       Long lastFacultyId = (lastFaculty == null) ? null : lastFaculty.getId();
 
-//       this.testRestTemplate.delete("http://localhost:" + port + "/faculty/" + findLastFacultyId());
+       this.testRestTemplate.delete("http://localhost:" + port + "/faculty/" + findLastFacultyId());
 
-//       assertNotEquals(findLastFacultyId(), lastFacultyId);
-//   }
+       assertNotEquals(findLastFacultyId(), lastFacultyId);
+   }
 
-//   /**
-//    * тестируем получение всех студентов
-//    */
-//   @Test
-//   void getAllStudentsTest() {
-//       //создание заголовков
-//       HttpHeaders headers = new HttpHeaders();
-///        headers.set("accept", "application/json");
-///        headers.set("Authorization", "Bearer JWT TOKEN HERE");
-//       HttpEntity requestEntity = new HttpEntity<>(null, headers);
-//       //создание запроса через метод exchange
-//       ResponseEntity<List<Student>> response = testRestTemplate.exchange(
-//               "http://localhost:" + port + "/student", HttpMethod.GET, requestEntity,
-//               new ParameterizedTypeReference<List<Student>>() {
-//               });
-//       //получение списка студентов из тела запроса
-//       List<Student> students = response.getBody();
-//       System.out.println("students = " + students);
-//       assertNotNull(students);
-//   }
+   @Test
+   void findFacultyByNameOrColorTest() {
+       String facultyColor = "белый";
+       facultyRepository.save(new Faculty(findLastFacultyId() + 1, "Тест", facultyColor));
+       long facultyId = findLastFacultyId();
 
-//   /**
-//    * тестируем получение всех факультетов
-//    */
-//   @Test
-//   void getAllFacultyTest() {
-//       //создание заголовков
-//       HttpHeaders headers = new HttpHeaders();
-///        headers.set("accept", "application/json");
-///        headers.set("Authorization", "Bearer JWT TOKEN HERE");
-//       HttpEntity requestEntity = new HttpEntity<>(null, headers);
-//       //создание запроса через метод exchange
-//       ResponseEntity<List<Faculty>> response = testRestTemplate.exchange(
-//               "http://localhost:" + port + "/faculty", HttpMethod.GET, requestEntity,
-//               new ParameterizedTypeReference<List<Faculty>>() {
-//               });
-//       //получение списка студентов из тела запроса
-//       List<Faculty> faculties = response.getBody();
-//       System.out.println("faculties = " + faculties);
-//       assertNotNull(faculties);
-//   }
+       try {
+           assertNotNull(this.testRestTemplate.getForObject(
+                   "http://localhost:" + port + "/faculty/filter_by_color/?color=" + facultyColor, String.class));
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       } finally {
+           facultyRepository.deleteById(facultyId);
+       }
+   }
 
-//   /**
-//    * тестируем получение студентов по возрасту
-//    */
-//   @Test
-//   void getStudentsAccordingAge() {
-//       //создаю студента
-//       int studentsAge = 25;
-//       studentRepository.save(new Student(findLastStudentId() + 1, "Лена Целофанова", studentsAge));
-//       long studentId = findLastStudentId();
+   @Test
+   void byAgeBetweenTest() {
+       int studentsAgeMin = 15;
+       int studentsAgeMax = 25;
 
-//       //в блок try оборачиваю конструкцию, чтобы студент в блоке finally гарантированно удалялся.
-//       try {
-//           assertNotNull(this.testRestTemplate.getForObject(
-//                   "http://localhost:" + port + "/student/filter_by_age/" + studentsAge, String.class));
-//       } catch (Exception e) {
-//           throw new RuntimeException(e);
-//       } finally {
-//           studentRepository.deleteById(studentId);
-//       }
-//   }
+       studentRepository.save(new Student(findLastStudentId() + 1, "Ольга", studentsAgeMin));
+       long studentIdMin = findLastStudentId();
 
-//   /**
-//    * тестируем получение факультетов по цвету
-//    */
-//   @Test
-//   void getFacultyAccordingColor() {
-//       //создаю студента
-//       String facultyColor = "малиновый";
-//       facultyRepository.save(new Faculty(findLastFacultyId() + 1, "тестовыйФакультет", facultyColor));
-//       long facultyId = findLastFacultyId();
+       studentRepository.save(new Student(findLastStudentId() + 1, "Оля", studentsAgeMax));
+       long studentIdMax = findLastStudentId();
 
-//       //в блок try оборачиваю конструкцию, чтобы факультет в блоке finally гарантированно удалялся.
-//       try {
-//           assertNotNull(this.testRestTemplate.getForObject(
-//                   "http://localhost:" + port + "/faculty/filter_by_color/?color=" + facultyColor, String.class));
-//       } catch (Exception e) {
-//           throw new RuntimeException(e);
-//       } finally {
-//           facultyRepository.deleteById(facultyId);
-//       }
-//   }
+       try {
+           assertNotNull(this.testRestTemplate.getForObject(
+                   "http://localhost:" + port + "/student/find_age_between/?minAge=" + studentsAgeMin +
+                           "&maxAge=" + studentsAgeMax, String.class));
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       } finally {
+           System.out.println("studentIdMin  studentIdMax = " + studentIdMin + " " + studentIdMax);
+           studentRepository.deleteById(findLastStudentId());
+           studentRepository.deleteById(findLastStudentId());
+       }
+   }
 
-//   /**
-//    * тестируем получение студентов по возрасту между мин и макс
-//    */
-//   @Test
-//   void findStudentByAgeBetween() {
-//       int studentsAgeMin = 25;
-//       int studentsAgeMax = 55;
 
-//       studentRepository.save(new Student(findLastStudentId() + 1, "Лена Целофанова", studentsAgeMin));
-//       long studentIdMin = findLastStudentId();
+   @Test
+   void findStudentByFacultyTest() {
 
-//       studentRepository.save(new Student(findLastStudentId() + 1, "Лена Целофанова", studentsAgeMax));
-//       long studentIdMax = findLastStudentId();
+       Student student = new Student(findLastStudentId() + 1, "Вася", 20);
+       studentRepository.save(student);
 
-//       try {
-//           assertNotNull(this.testRestTemplate.getForObject(
-//                   "http://localhost:" + port + "/student/find_age_between/?minAge=" + studentsAgeMin +
-//                           "&maxAge=" + studentsAgeMax, String.class));
-//       } catch (Exception e) {
-//           throw new RuntimeException(e);
-//       } finally {
-//           System.out.println("studentIdMin  studentIdMax = " + studentIdMin + " " + studentIdMax);
-//           studentRepository.deleteById(findLastStudentId());
-//           studentRepository.deleteById(findLastStudentId());
-//       }
-//   }
-//   /**
-//    * тестируем поиск студента по факультету
-//    */
-//   @Test
-//   void findStudentByFaculty() {
-//       int studentsAge = 25;
-//       Student student = new Student(findLastStudentId() + 1, "Лена Целофанова", studentsAge);
-//       studentRepository.save(student);
+       try {
+           assertNotNull(this.testRestTemplate.
+                   getForObject(
+                           "http://localhost:" + port + "/student/find_student_by_faculty", String.class, student));
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       } finally {
+           studentRepository.deleteById(findLastStudentId());
+       }
+   }
 
-//       try {
-//           assertNotNull(this.testRestTemplate.
-//                   getForObject(
-//                           "http://localhost:" + port + "/student/find_student_by_faculty", String.class, student));
-//       } catch (Exception e) {
-//           throw new RuntimeException(e);
-//       } finally {
-//           studentRepository.deleteById(findLastStudentId());
-//       }
-//   }
-//   /**
-//    * тестируем поиск факультета по студенту
-//    */
-//   @Test
-//   void findFacultyByStudent() {
-//       Faculty faculty = new Faculty(findLastFacultyId() + 1, "тестовыйФакультет", "красный");
-//       facultyRepository.save(faculty);
+   @Test
+   void findFacultyByStudentTest() {
+       Faculty faculty = new Faculty(findLastFacultyId() + 1, "Тест", "лиловый");
+       facultyRepository.save(faculty);
 
-//       try {
-//           assertNotNull(this.testRestTemplate.
-//                   getForObject(
-//                           "http://localhost:" + port + "/student/find_faculty_by_student", String.class, faculty));
-//       } catch (Exception e) {
-//           throw new RuntimeException(e);
-//       } finally {
-//           facultyRepository.deleteById(findLastFacultyId());
-//       }
-//   }
+       try {
+           assertNotNull(this.testRestTemplate.
+                   getForObject(
+                           "http://localhost:" + port + "/student/find_faculty_by_student", String.class, faculty));
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       } finally {
+           facultyRepository.deleteById(findLastFacultyId());
+       }
+   }
 }
