@@ -73,9 +73,9 @@ public class ApplicationTestWebMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.id").value(id))
-                .andExpect((ResultMatcher) jsonPath("$.name").value(name))
-                .andExpect((ResultMatcher) jsonPath("$.age").value(age));
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.age").value(age));
     }
 
     @Test
