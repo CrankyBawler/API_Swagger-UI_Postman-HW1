@@ -89,6 +89,7 @@ class ApplicationTests {
                "http://localhost:" + port + "/student/1", String.class));
    }
 
+
    @Test
    void getFacultyInfoTest() {
        assertNotNull(this.testRestTemplate.getForObject(
