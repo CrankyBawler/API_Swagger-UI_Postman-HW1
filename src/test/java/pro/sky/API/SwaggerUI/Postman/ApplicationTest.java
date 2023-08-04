@@ -98,9 +98,11 @@ class ApplicationTests {
 
    @Test
    public void editStudentTest() {
-    Student student = new  Student(findLastStudentId(), "Имя2", 20);
-       this.testRestTemplate.put("http://localhost:" + port + "/student", student);
-       Optional<Student> optionalStudent = studentRepository.findById(findLastStudentId());
+       long lastStudentId = findLastStudentId();
+       Student student = new Student(lastStudentId, "Имя2", 20);
+       this.testRestTemplate.put("http://localhost:" + port + "/student/" + lastStudentId, student);
+       Optional<Student> optionalStudent = studentRepository.findById(lastStudentId);
+
 
        assertTrue(optionalStudent.isPresent());
 
