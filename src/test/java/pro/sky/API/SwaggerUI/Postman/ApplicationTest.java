@@ -109,14 +109,19 @@ class ApplicationTests {
        assertEquals(student, actualStudent);
    }
 
-   @Test
-   public void editFacultyTest() {
-         Faculty faculty = new Faculty(findLastFacultyId(), "Факультет2", "Белый");
-       ResponseEntity<Faculty> response = facultyController.editFaculty(faculty);
-       int actualStatusCodeValue = response.getStatusCodeValue();
-       int expectedCode = 200;
-       Assertions.assertEquals(expectedCode, actualStatusCodeValue, "коды не совпадают");
-   }
+    @Test
+    public void editFacultyTest() {
+        Faculty faculty = new Faculty(findLastFacultyId(), "Факультет2", "Белый");
+        this.testRestTemplate.put("http://localhost:" + port + "/faculty", faculty);
+        Optional<Faculty> optionalFaculty = facultyRepository.findById(findLastFacultyId());
+
+        assertTrue(optionalFaculty.isPresent());
+
+
+        Faculty actualFaculty = optionalFaculty.get();
+        assertEquals(faculty, actualFaculty);
+    }
+
   @Test
    void deleteStudentTest() {
        Student lastStudent = studentRepository.findById(findLastStudentId()).orElse(null);
