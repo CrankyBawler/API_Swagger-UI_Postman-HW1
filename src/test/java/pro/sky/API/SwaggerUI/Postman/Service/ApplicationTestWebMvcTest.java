@@ -248,22 +248,19 @@ public class ApplicationTestWebMvcTest {
 
        @Test
     void byAgeBetweenTest() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JSONObject facultyObject = new JSONObject();
-        facultyObject.put("name", "");
-        facultyObject.put("age", "");
+        JSONObject studentObject = new JSONObject();
+        studentObject.put("name", "");
+        studentObject.put("age", "");
 
-        Student student = new Student(1L, "Вася", 8);
-        Student student2 = new Student(2L, "Вася", 9);
-        List<Student> list = new ArrayList<>();
-        list.add(student);
-        list.add(student2);
+        Student student = new Student(1L, "Ира", 6);
+        Student student2 = new Student(2L, "Валера", 12);
 
 
-        when(studentRepository.findByAgeBetween(any(Integer.class),any(Integer.class))).thenReturn(list);
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/find_age_between/?minAge=2&maxAge=4")
-                        .content(facultyObject.toString())
+        when(studentRepository.findByAgeBetween(any(Integer.class),any(Integer.class))).thenReturn(Arrays.asList(student, student2));
+           ObjectMapper objectMapper = new ObjectMapper();
+           mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/byAgeBetween?minAge=5&maxAge=13")
+                        .content(studentObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
