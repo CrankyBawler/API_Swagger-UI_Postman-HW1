@@ -40,11 +40,13 @@ public class ApplicationTestWebMvcTest {
     private FacultyRepository facultyRepository;
     @MockBean
     private AvatarRepository avatarRepository;
-    @SpyBean
+    @SpyBean(StudentServiceImpl.class)
     private StudentService studentService;
-    @SpyBean
+
+    @SpyBean(classes = FacultyServiceImpl.class)
     private FacultyService facultyService;
-    @SpyBean
+
+    @SpyBean(classes = AvatarServiceImpl.class)
     private AvatarService avatarService;
 
     @InjectMocks
@@ -128,7 +130,7 @@ public class ApplicationTestWebMvcTest {
         when(studentRepository.save(any(Student.class))).thenReturn(student);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/student")
+                        .put("/student/1")
                         .content(studentObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -275,4 +277,3 @@ public class ApplicationTestWebMvcTest {
 
     }
 }
-
