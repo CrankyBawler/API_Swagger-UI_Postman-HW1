@@ -254,17 +254,21 @@ public class ApplicationTestWebMvcTest {
 
         Student student = new Student(1L, "Ира", 6);
         Student student2 = new Student(2L, "Валера", 12);
+           List<Student> list = new ArrayList<>();
+           list.add(student);
+           list.add(student2);
 
 
-        when(studentRepository.findByAgeBetween(any(Integer.class),any(Integer.class))).thenReturn(Arrays.asList(student, student2));
+        when(studentRepository.findByAgeBetween(any(Integer.class),any(Integer.class))).thenReturn(list);
            ObjectMapper objectMapper = new ObjectMapper();
            mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/byAgeBetween?minAge=5&maxAge=13")
-                        .content(studentObject.toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(student, student2))));
+                           .get("/student/byAgeBetween?minAge=5&maxAge=13")
+                           .content(studentObject.toString())
+                           .contentType(MediaType.APPLICATION_JSON)
+                           .accept(MediaType.APPLICATION_JSON))
+                   .andExpect(status().isOk())
+                   .andExpect((ResultMatcher) content().json(objectMapper.writeValueAsString(Arrays.asList(list))));
+
     }
 }
 
