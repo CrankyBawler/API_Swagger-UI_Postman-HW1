@@ -268,7 +268,7 @@ public class ApplicationTestWebMvcTest {
         when(studentRepository.findByAgeBetween(any(Integer.class), any(Integer.class))).thenReturn(List.of(student, student2));
         ObjectMapper objectMapper = new ObjectMapper();
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/byAgeBetween?minAge=5&maxAge=13")
+                        .get("/student/byAgeBetween?ageMin=5&ageMax=13")
                         .content(studentObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
