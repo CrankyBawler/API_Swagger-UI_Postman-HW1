@@ -165,7 +165,7 @@ class ApplicationTests {
 
        try {
            assertNotNull(this.testRestTemplate.getForObject(
-                   "http://localhost:" + port + "/student/find_age_between/?minAge=" + studentsAgeMin +
+                   "http://localhost:" + port + "/student/find_age_between?minAge=" + studentsAgeMin +
                            "&maxAge=" + studentsAgeMax, String.class));
        } catch (Exception e) {
            throw new RuntimeException(e);
