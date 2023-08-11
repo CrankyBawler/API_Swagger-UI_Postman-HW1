@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.getAverageAge();
     }
 
-    public List<FiveLastStudents> getFiveLastStudents() {
+    public List<Student> getFiveLastStudents() {
         return studentRepository.getFiveLastStudents();
     }
 

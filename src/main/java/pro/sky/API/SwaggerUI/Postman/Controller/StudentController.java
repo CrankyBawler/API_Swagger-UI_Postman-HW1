@@ -73,7 +73,7 @@ public class StudentController {
     }
 
     @GetMapping("/get_five_last_students")
-    public List<FiveLastStudents> getFiveLastStudents(){
+    public List<Student> getFiveLastStudents(){
         return studentService.getFiveLastStudents();
     }
 
