@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.API.SwaggerUI.Postman.Entity.FiveLastStudents;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Service.StudentService;
@@ -56,25 +55,32 @@ public class StudentController {
     public Collection<Student> byAgeBetween(@RequestParam int ageMin, @RequestParam int ageMax) {
         return studentService.findByAgeBetween(ageMin, ageMax);
     }
+
     @GetMapping("faculty/{studentId}")
-        public ResponseEntity<Faculty> getFaculty(@PathVariable Long studentId) {
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long studentId) {
         Faculty faculty = studentService.get(studentId).getFaculty();
         return ResponseEntity.ok(faculty);
     }
 
     @GetMapping("/get_quantity_of_all_students")
-    public List<Integer> getQuantityOfAllStudents(){
+    public List<Integer> getQuantityOfAllStudents() {
         return studentService.getQuantityOfAllStudents();
     }
 
     @GetMapping("/get_average_age")
-    public List<Double> getAverageAge(){
+    public List<Double> getAverageAge() {
         return studentService.getAverageAge();
     }
 
     @GetMapping("/get_five_last_students")
-    public List<Student> getFiveLastStudents(){
+    public List<Student> getFiveLastStudents() {
         return studentService.getFiveLastStudents();
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Student>> getStudentsByName (@PathVariable("name") String name){
+        List<Student> students = studentService.getStudentsByName(name);
+        return ResponseEntity.ok(students);
+
+    }
 }

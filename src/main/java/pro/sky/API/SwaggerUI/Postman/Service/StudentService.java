@@ -1,6 +1,5 @@
 package pro.sky.API.SwaggerUI.Postman.Service;
 
-import pro.sky.API.SwaggerUI.Postman.Entity.FiveLastStudents;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 
 import java.util.Collection;
@@ -24,4 +23,6 @@ public interface StudentService {
     List<Double> getAverageAge();
 
     List<Student> getFiveLastStudents();
+
+    public List<Student> getStudentsByName(String name);
 }

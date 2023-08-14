@@ -2,7 +2,6 @@ package pro.sky.API.SwaggerUI.Postman.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import pro.sky.API.SwaggerUI.Postman.Entity.FiveLastStudents;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 
 import java.util.Collection;
@@ -19,6 +18,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "select * from student order by id desc limit 5;", nativeQuery = true)
     List<Student> getFiveLastStudents();
+
+    List<Student> getStudentsByName(String name);
 
 
 }

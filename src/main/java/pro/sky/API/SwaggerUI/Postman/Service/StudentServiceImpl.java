@@ -1,7 +1,7 @@
 package pro.sky.API.SwaggerUI.Postman.Service;
 
 import org.springframework.stereotype.Service;
-import pro.sky.API.SwaggerUI.Postman.Entity.FiveLastStudents;
+
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.StudentRepository;
@@ -55,6 +55,10 @@ public class StudentServiceImpl implements StudentService {
 
     public List<Student> getFiveLastStudents() {
         return studentRepository.getFiveLastStudents();
+    }
+
+    public List<Student> getStudentsByName(String name) {
+        return studentRepository.getStudentsByName(name);
     }
 
 }
