@@ -1,5 +1,7 @@
 package pro.sky.API.SwaggerUI.Postman.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -35,23 +37,30 @@ public class AvatarServiceImpl implements AvatarService {
         this.studentRepository = studentRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
     public Avatar findAvatar(Long studentId) {
+        logger.info("Was invoked method for findAvatar");
         return avatarRepository.findAvatarByStudentId(studentId).orElse(new Avatar());
     }
     public String getExtensions(String fileName) {
+        logger.info("Was invoked method for getExtensions");
         return fileName.substring(fileName.lastIndexOf("."));
     }
 
     public void uploadAvatarFromNetwork(Long studentId, String path, String avatarName) throws IOException {
+        logger.info("Was invoked method for uploadAvatarFromNetwork");
         File avatarFile = new File(path);
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
         if (optionalStudent.isPresent() && avatarFile == null) {
+            logger.error("There is optionalStudent.isPresent() && avatarFile == null");
             throw new IllegalArgumentException();
         }
         Student student = optionalStudent.orElse(null);
-        String orifinalFileName = avatarName;
+        String originalFileName = avatarName;
 
-        if (orifinalFileName == null) {
+        if (originalFileName == null) {
+            logger.error("There is originalFileName == null");
             throw new IllegalArgumentException();
         }
 
@@ -82,14 +91,17 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for uploadAvatar");
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
         if (optionalStudent.isPresent() && avatarFile == null) {
+            logger.error("There is optionalStudent.isPresent() && avatarFile == null");
             throw new IllegalArgumentException();
         }
         Student student = optionalStudent.orElse(null);
         String originalFileName = avatarFile.getOriginalFilename();
 
         if (originalFileName == null) {
+            logger.error("There is originalFileName == null");
             throw new IllegalArgumentException();
         }
         Path filePath = Path.of(avatarsDir, studentId + getExtensions(originalFileName));
@@ -114,6 +126,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("Was invoked method for getAllAvatars");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
