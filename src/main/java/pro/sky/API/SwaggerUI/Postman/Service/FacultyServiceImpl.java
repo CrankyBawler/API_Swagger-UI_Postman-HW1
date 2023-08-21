@@ -8,6 +8,7 @@ import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 
 @Service
@@ -48,6 +49,12 @@ public class FacultyServiceImpl implements FacultyService {
     public Faculty get(long facultyId) {
         logger.info("Was invoked method for get");
         return facultyRepository.getById(facultyId);
+    }
+
+    public Faculty getLongFacultyName() {
+        return facultyRepository.findAll().stream()
+                .max(Comparator.comparing(faculty -> faculty.getName().length()))
+                .orElse(null);
     }
 
 

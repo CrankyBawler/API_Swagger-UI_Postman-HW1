@@ -25,4 +25,8 @@ public interface StudentService {
     List<Student> getFiveLastStudents();
 
     public List<Student> getStudentsByName(String name);
+
+    public List<Student> getStudentsNamesLetterA();
+
+    public double getMiddleAgesStudents();
 }

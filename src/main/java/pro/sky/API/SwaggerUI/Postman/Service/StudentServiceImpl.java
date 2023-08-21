@@ -4,13 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import org.springframework.util.StringUtils;
 import pro.sky.API.SwaggerUI.Postman.Model.Faculty;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 import pro.sky.API.SwaggerUI.Postman.Repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -73,5 +76,22 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Was invoked method for getStudentsByName");
         return studentRepository.getStudentsByName(name);
     }
+
+    public List<Student> getStudentsNamesLetterA() {
+        return studentRepository.findAll().stream()
+                .map(student -> new Student(student.getId(),
+                        StringUtils.capitalize(student.getName()),
+                        student.getAge()))
+                .filter(student -> student.getName().startsWith("А"))
+                .sorted(Comparator.comparing(Student::getName))
+                .collect(Collectors.toList());
+    }
+    public double getMiddleAgesStudents() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElse(0d);
+    }
+
 
 }

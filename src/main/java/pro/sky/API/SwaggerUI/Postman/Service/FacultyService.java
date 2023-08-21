@@ -18,4 +18,6 @@ public interface FacultyService {
     Collection<Faculty> findByNameOrColor(String name, String color);
 
     Faculty get(long facultyId);
+
+    public Faculty getLongFacultyName();
 }
