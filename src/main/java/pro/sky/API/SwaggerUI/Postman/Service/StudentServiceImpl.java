@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -84,7 +86,7 @@ public class StudentServiceImpl implements StudentService {
                         student.getAge()))
                 .filter(student -> student.getName().startsWith("А"))
                 .sorted(Comparator.comparing(Student::getName))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
     public double getMiddleAgesStudents() {
         return studentRepository.findAll().stream()
@@ -93,5 +95,41 @@ public class StudentServiceImpl implements StudentService {
                 .orElse(0d);
     }
 
+    public void doStudentsThread() {
+        System.out.println("Student Name 1: " + studentRepository.findAll().get(0).getName());
+        System.out.println("Student Name 2: " + studentRepository.findAll().get(1).getName());
 
+        Thread thread1 = new Thread(() -> {
+            System.out.println("Student Name 3: " + studentRepository.findAll().get(2).getName());
+            System.out.println("Student Name 4: " + studentRepository.findAll().get(3).getName());
+        });
+        thread1.start();
+
+        Thread thread2 = new Thread(() -> {
+            System.out.println("Student Name 5: " + studentRepository.findAll().get(4).getName());
+            System.out.println("Student Name 6: " + studentRepository.findAll().get(5).getName());
+        });
+        thread2.start();
+    }
+
+   public void doSynchronizedStudentsThread() {
+       System.out.println("Student Name 1: " + studentRepository.findAll().get(0).getName());
+       System.out.println("Student Name 2: " + studentRepository.findAll().get(1).getName());
+
+       Thread thread1 = new Thread(() -> {
+           synchronized (StudentService.class){
+               System.out.println("Student Name 3: " + studentRepository.findAll().get(2).getName());}
+           synchronized (StudentService.class){
+               System.out.println("Student Name 4: " + studentRepository.findAll().get(3).getName());}
+       });
+       thread1.start();
+
+       Thread thread2 = new Thread(() -> {
+           synchronized (StudentService.class){
+               System.out.println("Student Name 5: " + studentRepository.findAll().get(4).getName());}
+           synchronized (StudentService.class){
+               System.out.println("Student Name 6: " + studentRepository.findAll().get(5).getName());}
+       });
+       thread2.start();
+    }
 }

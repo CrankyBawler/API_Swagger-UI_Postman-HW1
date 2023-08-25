@@ -29,4 +29,6 @@ public interface StudentService {
     public List<Student> getStudentsNamesLetterA();
 
     public double getMiddleAgesStudents();
+    public void doStudentsThread();
+    public void doSynchronizedStudentsThread();
 }

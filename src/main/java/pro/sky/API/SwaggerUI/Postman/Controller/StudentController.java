@@ -92,4 +92,14 @@ public class StudentController {
     public double getMiddleAgesStudents() {
         return studentService.getMiddleAgesStudents();
     }
+
+    @GetMapping("/getStudentThread")
+    public void getStudentThread() {
+        studentService.doStudentsThread();
+    }
+   @GetMapping("/getStudentThreadSynchronized")
+   public void getStudentThreadSynchronized() {
+       studentService.doSynchronizedStudentsThread();
+   }
+
 }
