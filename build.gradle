@@ -21,6 +21,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
 	implementation 'org.postgresql:postgresql:42.6.0'
+	implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.23.1'
 }
 
 tasks.named('test') {

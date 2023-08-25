@@ -3,6 +3,7 @@ package pro.sky.API.SwaggerUI.Postman.Service;
 import pro.sky.API.SwaggerUI.Postman.Model.Student;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface StudentService {
     Student addStudent(Student student);
@@ -16,4 +17,18 @@ public interface StudentService {
     Collection<Student> findByAgeBetween(int ageMin, int ageMax);
 
     public Student get(long studentId);
+
+    List<Integer> getQuantityOfAllStudents();
+
+    List<Double> getAverageAge();
+
+    List<Student> getFiveLastStudents();
+
+    public List<Student> getStudentsByName(String name);
+
+    public List<Student> getStudentsNamesLetterA();
+
+    public double getMiddleAgesStudents();
+    public void doStudentsThread();
+    public void doSynchronizedStudentsThread();
 }
